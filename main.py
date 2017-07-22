@@ -51,7 +51,8 @@ async def hadith(ctx, book_name : str = None, book_number : int = None, hadith_n
             url = 'https://sunnah.com/{0}/{1}'.format(book_name,book_number)
 
     else:
-        await bot.send_message(ctx.message.channel, content = "Invalid book name! Valid book names are `{0}`"
+        await bot.send_message(ctx.message.channel, content = "Invalid syntax! Please use -hadith (book name) 
+                               (chapter number) (hadith number). Valid book names are `{0}`"
                                .format(hadith_book_list))
 
 
@@ -180,8 +181,8 @@ async def ahadith(ctx, book_name : str = None, book_number : int = None, hadith_
             url = 'https://sunnah.com/{0}/{1}'.format(book_name, book_number)
 
     else:
-        await bot.send_message(ctx.message.channel, content = "Invalid book name! Valid book names are `{0}`"
-                               .format(hadith_book_list))
+        await bot.send_message(ctx.message.channel, content = "Invalid syntax! Please use -hadith (book name) 
+                               (chapter number) (hadith number). Valid book names are `{0}`"
 
 
     # Setup scanner

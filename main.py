@@ -214,11 +214,14 @@ async def ahadith(ctx, book_name : str = None, book_number : int = None, hadith_
         # Formatting for normal hadith
         if book_name is not  'الأربعون النووية' or 'الأربعون القدسية':
 
-            em.set_author(name='{2} - كتاب {1} - حديث {0}'.format(hadith_number, book_number, book_name), icon_url=icon)
+            em.set_author(name=' حديث {0} -'
+                               ' كتاب {1} -'
+                               ' {2}'.format(hadith_number, book_number, book_name), icon_url=icon)
 
         # Formatting for Qudsi and Nawawi
         else:
-            em.set_author(name='{1} - حديث {0}' .format(book_number, book_name), icon_url=icon)
+            em.set_author(name='حديث {0}'
+                               ' - {1}' .format(book_number, book_name), icon_url=icon)
 
         await bot.send_message(ctx.message.channel, embed=em)
 
@@ -228,4 +231,4 @@ async def ahadith(ctx, book_name : str = None, book_number : int = None, hadith_
 
 
 
-bot.run(token)
+bot.run(your_token_here)

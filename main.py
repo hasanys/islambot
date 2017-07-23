@@ -214,6 +214,7 @@ async def ahadith(ctx, book_name : str = None, book_number : int = None, hadith_
         # Formatting for normal hadith
         if book_name is not  'الأربعون النووية' or 'الأربعون القدسية':
 
+        # All Arabic below is formatted incorrectly (thanks Github), it should look like this: https://gyazo.com/8ac879238789efee35c1c0dc9be7e465
             em.set_author(name=' حديث {0} -'
                                ' كتاب {1} -'
                                ' {2}'.format(hadith_number, book_number, book_name), icon_url=icon)

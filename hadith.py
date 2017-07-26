@@ -17,7 +17,7 @@ class Hadith:
         self.bot = bot
 
     @commands.bot.command(pass_context=True)
-    async def hadith(self, ctx, book_name : str = None, book_number : int = None, hadith_number: int = None):
+    async def hadith(self, ctx, book_name: str = None, book_number: int = None, hadith_number: int = None):
 
         # Initialize and change some variables
         narrator = None
@@ -130,10 +130,10 @@ class Hadith:
 
             await self.bot.say(error)
 
-
     # Arabic hadith
+    
     @commands.command(pass_context=True)
-    async def ahadith(self, ctx, book_name : str = None, book_number : int = None, hadith_number: int = None):
+    async def ahadith(self, ctx, book_name: str, book_number: str, hadith_number: str = None):
 
         text = None
         chapter_name = None
@@ -142,7 +142,7 @@ class Hadith:
         # Construct URL
         if book_name in hadith_book_list:
 
-            # convert qudsi and nawawi to version needed for url (they are special)
+            # Convert Qudsi and Nawawi to version needed for URL (they are special)
             if book_name == 'qudsi':
                 book_name = 'qudsi40'
 

@@ -38,13 +38,14 @@ class PrayerTimes:
             }[school]
 
         # If maddhab is not valid then send an error message and default to Hanafi
-        elif school not in school_list:
+        elif school not in school_list and school is not None:
             await self.bot.say('The school must be either Hanafi or Shafii. Example: `-prayertimes London 2 Hanafi`'
                                '\nDefaulting to Hanafi.')
             school = '1'
 
         # If maddhab is not specified, default to Hanafi
         elif school is None:
+            await self.bot.say('No school specified. Defaulting to Hanafi.')
             school = '1'
 
         # Now construct URL

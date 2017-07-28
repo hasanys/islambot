@@ -16,6 +16,7 @@ async def on_ready():
 
 # Load cogs
 bot.load_extension('hadith')
+bot.load_extension('prayertimes')
 
 # No, you can't have my token
 bot.run('put your token here')

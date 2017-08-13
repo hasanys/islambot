@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import discord
 from discord.ext import commands
-import requests
+import aiohttp
 
 hadith_book_list = ['bukhari', 'muslim', 'tirmidhi', 'abudawud', 'nasai', 'ibnmajah', 'malik', 'riyadussaliheen', 'adab',
                     'bulugh', 'qudsi', 'nawawi']
@@ -47,8 +47,9 @@ class Hadith:
                           f' \nValid book names are `{hadith_book_list}`')
 
         # Setup scanner
-        r = requests.get(url)
-        data = r.text
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as resp:
+                data = await resp.read()
         scanner = BeautifulSoup(data, "html.parser")
 
         # Get raw hadith text
@@ -161,8 +162,9 @@ class Hadith:
                                f' \nValid book names are `{hadith_book_list}`')
 
         # Setup scanner
-        r = requests.get(url)
-        data = r.text
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as resp:
+                data = await resp.read()
         scanner = BeautifulSoup(data, "html.parser")
 
         # Get raw hadith text

@@ -29,7 +29,7 @@ class PrayerTimes:
 
         # Otherwise, if the method is not specified, default to Umm al-Qura
         elif method is None:
-            await self.bot.say('No method specified. Defaulting to Umm al-Qura, Makkah.')
+            await self.bot.say('*No method specified. Defaulting to Umm al-Qura, Makkah.*')
             method = '4'
 
         # Allow maddhab to be typed in different cases:
@@ -45,13 +45,13 @@ class PrayerTimes:
 
         # If maddhab is not valid then send an error message and default to Hanafi
         elif maddhab not in maddhab_list and maddhab is not None:
-            await self.bot.say('The maddhab must be either Hanafi or Shafii. Example: `-prayertimes London 3 Shafii`'
+            await self.bot.say('The maddhab must be either Hanafi or Shafii. Example: `.prayertimes London 3 Shafii`'
                                '\nDefaulting to Hanafi.')
             maddhab = '1'
 
         # If maddhab is not specified, default to Hanafi
         elif maddhab is None:
-            await self.bot.say('No maddhab specified. Defaulting to Hanafi.')
+            await self.bot.say('*No maddhab specified. Defaulting to Hanafi.*')
             maddhab = '1'
 
         # Now construct URL
@@ -106,10 +106,10 @@ class PrayerTimes:
             await self.bot.say(embed=em)
 
         except:
-            await self.bot.say('Invalid arguments! Usage: `-prayertimes [location] [method] [maddhab]`.\n'
-                               'Example: `-prayertimes London 4 Shafii`\n'
+            await self.bot.say('Invalid arguments! Usage: `.prayertimes [location] [method] [maddhab]`.\n'
+                               'Example: `.prayertimes London 4 Shafii`\n'
                                'You can include multiple words in the location by enclosing it in quotes. Example:'
-                               '`-prayertimes "East London Mosque" 4 Shafii`')
+                               '`.prayertimes "East London Mosque" 4 Shafii`')
 
 
 # Register as cog

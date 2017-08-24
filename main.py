@@ -3,7 +3,7 @@ from discord.ext import commands
 
 description = 'A Discord bot which allows you to search ahadith from sunnah.com.'
 
-bot = commands.Bot(command_prefix='-', description=description)
+bot = commands.Bot(command_prefix='.', description=description)
 
 # Setup
 @bot.event
@@ -17,6 +17,6 @@ async def on_ready():
 # Load cogs
 bot.load_extension('hadith')
 bot.load_extension('prayertimes')
+bot.load_extension('quran')
 
-# No, you can't have my token
-bot.run('put your token here')
+bot.run('tokenhere')

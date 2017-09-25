@@ -17,7 +17,7 @@ For example:
 ```
 -quran 1:1-7 yusufali 
 ```
-The above command would quote Surah 1, Verses 1-7 (Surah al-Fatihah) using the translation of Yusuf Ali 
+The above command would quote Surah 1, Verses 1-7 (Surah al-Fatihah) using the translation of Yusuf Ali.
 
 #### Valid translation editions
 * sahih = Saheeh International
@@ -95,7 +95,7 @@ Not all hadith are indexed correctly on sunnah.com, and not all use the same num
 
 ## Prayer (Salaah) Times
 
-The bot can also get prayer times for a specific address/location, with optional parameters for the calculation method and maddhab (either Hanafi or Shafi'i).
+The bot can also get prayer times for a specific address/location, with optional parameters for the calculation method and maddhab (either Hanafi or Shafi'i (Shafi'i prayer times are the same as Maliki and Hanbali).
 
 ```
 -prayertimes <"address/location name"> [method number] [maddhab]
@@ -117,7 +117,7 @@ For example:
 
 ## Hijri Calendar
 
-The bot can also (rather inaccurately) convert both ways between the Hijri and Gregorians calendars.
+The bot can also (rather inaccurately) convert both ways between the Hijri and Gregorian calendars.
 
 ### -convertdate
 Converts a Gregorian date to its corresponding Hijri date.

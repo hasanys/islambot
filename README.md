@@ -43,8 +43,7 @@ The above command would quote Surah 1, Verses 1-7 (Surah al-Fatihah) using the t
 * yusufali = Yusuf Ali 
 
 ### -aquran
-**-aquran** functions in the same way as **-quran**, but quotes the verse in Arabic. Obviously, there is no option for different editions,
-as there is only one Arabic Qu'ran. 
+**-aquran** functions in the same way as **-quran**, but quotes the verse in Arabic.
 
 For example, to quote the first verse of the Qu'ran:
 ```

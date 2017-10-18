@@ -49,6 +49,28 @@ For example, to quote the first verse of the Qu'ran:
 ```
 -aquran 1:1
 ```
+## Tafseer
+
+### -tafsir
+**-tafsir** allows you to quote the tasfir (commentary) of verses in Arabic. Currently, Tafsir al-Jalalayn and Tafsir al-Muyassar are available. It works in the same manner as **-quran**.
+
+```
+-tafsir <surah>:<verse(s)> [tafsir edition]
+```
+
+For example:
+
+```
+-tafsir 2:255 muyassar
+```
+The above command would quote the tafsir of Ayatul Kursi from Tafsir al-Muyassar.
+
+#### Valid tafsir editions
+* jalalayn = Tafsir al-Jalalayn
+
+* muyassar = Tafsir al-Muyassar
+
+If no tafsir edition is chosen, it will default to Tafsir al-Jalalayn.
 
 ## Hadith 
 

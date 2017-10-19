@@ -2,6 +2,7 @@ from collections import OrderedDict
 from aiohttp import ClientSession
 from discord.ext import commands
 from utils import makeEmbed
+from helpers import processRef
 
 icon = 'https://lh6.ggpht.com/hwhtsACU29Zv7NNKpLqH4k0NgCrdc6xU-B5PMx06PxH29PMz_PuBEFcmtvp37qZHhqGI=w300'
 edition_list = ['sahih', 'ahmedali', 'ahmedraza', 'arberry', 'asad', 'daryabadi', 'hilali', 'pickthall', 'qaribullah',
@@ -17,20 +18,8 @@ class Quran:
     @commands.bot.command(pass_context=True)
     async def aquran(self, ctx, *, ref: str):
 
-        # Get surah
         try:
-            surah = int(ref.split(':')[0])
-
-            # Get first ayah
-            min_ayah = int(ref.split(':')[1].split('-')[0])
-
-            # Get last ayah
-            try:
-                max_ayah = int(ref.split(':')[1].split('-')[1]) + 1
-            except IndexError as e:
-                max_ayah = min_ayah + 1
-
-        # Otherwise throw an error
+            surah, min_ayah, max_ayah = processRef(ref)
         except:
             await self.bot.say("Invalid arguments! Do `.aquran [surah]:[ayah]`. Example: `.aquran 1:1`\nTo quote multi"
                                "ple verses, do `.quran [surah]:[first ayah]-[last ayah]`\nExample: `.aquran 1:1-7`.")
@@ -73,18 +62,7 @@ class Quran:
 
         # Get surah
         try:
-            surah = int(ref.split(':')[0])
-
-            # Get first ayah
-            min_ayah = int(ref.split(':')[1].split('-')[0])
-
-            # Get last ayah
-            try:
-                max_ayah = int(ref.split(':')[1].split('-')[1]) + 1
-            except IndexError as e:
-                max_ayah = min_ayah + 1
-
-        # Otherwise throw an error
+            surah, min_ayah, max_ayah = processRef(ref)
         except:
             await self.bot.say("Invalid arguments! Do `.quran [surah]:[ayah] (edition)`. Example: `.quran 1:1`\n"
                                "Example 2: `.quran 1:1 yusufali`\n\nTo quote multiple verses, do `.quran [surah]:[first"

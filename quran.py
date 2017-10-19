@@ -1,8 +1,7 @@
 from aiohttp import ClientSession
 from discord.ext import commands
 from utils import makeEmbed
-from helpers import processRef, Specifics
-from main import prefix
+from helpers import processRef, Specifics, prefix
 
 icon = 'https://lh6.ggpht.com/hwhtsACU29Zv7NNKpLqH4k0NgCrdc6xU-B5PMx06PxH29PMz_PuBEFcmtvp37qZHhqGI=w300'
 edition_list = ['sahih', 'ahmedali', 'ahmedraza', 'arberry', 'asad', 'daryabadi', 'hilali', 'pickthall', 'qaribullah',

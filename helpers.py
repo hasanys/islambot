@@ -1,5 +1,6 @@
 from collections import OrderedDict
 
+prefix = '-'
 
 class Specifics:
     def __init__(self, surah, ayah, maxayah):

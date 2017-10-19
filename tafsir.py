@@ -1,7 +1,6 @@
 from aiohttp import ClientSession
 from discord.ext import commands
-from helpers import processRef, Specifics
-from main import prefix
+from helpers import processRef, Specifics, prefix
 from utils import makeEmbed
 
 icon = 'https://lh3.ggpht.com/zoyAL6BWpiHrgyFEujQcEXhBqZn4SfX0JiIFqOecs2JoZYy39Yam8xiz7Vq6kP7S2w=w300'

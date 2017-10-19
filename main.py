@@ -1,8 +1,8 @@
 import discord
+from helpers import prefix
 from discord.ext import commands
 
 description = "A bot with Qu'ran, hadith, hijri calendar and prayer time functions. Bot owner: @Zaify#6850"
-prefix = '-'
 bot = commands.Bot(command_prefix=prefix, description=description)
 servers = len(bot.servers)
 

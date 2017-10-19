@@ -1,6 +1,7 @@
 from collections import OrderedDict
 from aiohttp import ClientSession
 from discord.ext import commands
+from helpers import processRef
 from utils import makeEmbed
 
 icon = 'https://lh3.ggpht.com/zoyAL6BWpiHrgyFEujQcEXhBqZn4SfX0JiIFqOecs2JoZYy39Yam8xiz7Vq6kP7S2w=w300'
@@ -43,7 +44,7 @@ class Tafsir:
         print(f'{sender} executed command tafsir on {server} ({serverid})')
 
         try:
-            surah, min_ayah, max_ayah = self.processRef(ref)
+            surah, min_ayah, max_ayah = processRef(ref)
             tafsirSpec = TafsirSpecifics(surah, min_ayah, max_ayah)
         except:
             await self.bot.say("Invalid arguments! Do `-tafsir [surah]:[ayah] (optional tafsir name)`. "
@@ -74,19 +75,6 @@ class Tafsir:
                        inline=False)
 
         await self.bot.say(embed=em)
-
-    @staticmethod
-    def processRef(ref):
-
-        surah = int(ref.split(':')[0])
-        min_ayah = int(ref.split(':')[1].split('-')[0])
-
-        try:
-            max_ayah = int(ref.split(':')[1].split('-')[1]) + 1
-        except IndexError:
-            max_ayah = min_ayah + 1
-
-        return [surah, min_ayah, max_ayah]
 
     @staticmethod
     def processTafsirName(tafsir):

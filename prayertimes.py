@@ -79,7 +79,7 @@ class PrayerTimes:
 
     async def getPrayerTimes(self, location, method, maddhab):
         async with self.session.get(self.url.format(location, method, maddhab)) as r:
-            data = r.json()
+            data = await r.json()
 
         timings = data['data']['timings']
 

@@ -3,6 +3,7 @@ from aiohttp import ClientSession
 from discord.ext import commands
 from utils import makeEmbed
 from helpers import processRef
+from main import prefix
 
 icon = 'https://lh6.ggpht.com/hwhtsACU29Zv7NNKpLqH4k0NgCrdc6xU-B5PMx06PxH29PMz_PuBEFcmtvp37qZHhqGI=w300'
 edition_list = ['sahih', 'ahmedali', 'ahmedraza', 'arberry', 'asad', 'daryabadi', 'hilali', 'pickthall', 'qaribullah',
@@ -21,8 +22,12 @@ class Quran:
         try:
             surah, min_ayah, max_ayah = processRef(ref)
         except:
-            await self.bot.say("Invalid arguments! Do `.aquran [surah]:[ayah]`. Example: `.aquran 1:1`\nTo quote multi"
-                               "ple verses, do `.quran [surah]:[first ayah]-[last ayah]`\nExample: `.aquran 1:1-7`.")
+            await self.bot.say("Invalid arguments! Do `{0}aquran [surah]:[ayah]`. "
+                               "Example: `{0}aquran 1:1`"
+                               "\n"
+                               "To quote multiple verses, do `{0}quran [surah]:[first ayah]-[last ayah]`"
+                               "\n"
+                               "Example: `{0}aquran 1:1-7`.".format(prefix))
             return
 
         try:
@@ -64,9 +69,14 @@ class Quran:
         try:
             surah, min_ayah, max_ayah = processRef(ref)
         except:
-            await self.bot.say("Invalid arguments! Do `.quran [surah]:[ayah] (edition)`. Example: `.quran 1:1`\n"
-                               "Example 2: `.quran 1:1 yusufali`\n\nTo quote multiple verses, do `.quran [surah]:[first"
-                               " ayah]-[last ayah]`\nExample: `.quran 1:1-7`.")
+            await self.bot.say("Invalid arguments! Do `{0}quran [surah]:[ayah] (edition)`. "
+                               "Example: `{0}quran 1:1`"
+                               "\n"
+                               "Example 2: `{0}quran 1:1 yusufali`"
+                               "\n\n"
+                               "To quote multiple verses, do `{0}quran [surah]:[first ayah]-[last ayah]`"
+                               "\n"
+                               "Example: `{0}quran 1:1-7`.".format(prefix))
             return
 
         # Default to Sahih International if no edition is specified

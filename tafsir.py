@@ -2,6 +2,7 @@ from collections import OrderedDict
 from aiohttp import ClientSession
 from discord.ext import commands
 from helpers import processRef
+from main import prefix
 from utils import makeEmbed
 
 icon = 'https://lh3.ggpht.com/zoyAL6BWpiHrgyFEujQcEXhBqZn4SfX0JiIFqOecs2JoZYy39Yam8xiz7Vq6kP7S2w=w300'
@@ -47,14 +48,14 @@ class Tafsir:
             surah, min_ayah, max_ayah = processRef(ref)
             tafsirSpec = TafsirSpecifics(surah, min_ayah, max_ayah)
         except:
-            await self.bot.say("Invalid arguments! Do `-tafsir [surah]:[ayah] (optional tafsir name)`. "
-                               "Example: `-tafsir 1:1`"
+            await self.bot.say("Invalid arguments! Do `{0}tafsir [surah]:[ayah] (optional tafsir name)`. "
+                               "Example: `{0}tafsir 1:1`"
                                "\n\n"
-                               "To quote multiple verses, do `-tafsir [surah]:[first ayah]-[last ayah]`"
+                               "To quote multiple verses, do `{0}tafsir [surah]:[first ayah]-[last ayah]`"
                                "\n\n"
-                               "Example 2: `-tafsir 1:1-7 muyassar`"
+                               "Example 2: `{0}tafsir 1:1-7 muyassar`"
                                "\n\n"
-                               f"**Valid editions**: `{tafsir_list}`")
+                               "**Valid editions**: `{1}`".format(prefix, tafsir_list))
             return
 
         if tafsir is None:

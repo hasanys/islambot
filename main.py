@@ -2,8 +2,8 @@ import discord
 from discord.ext import commands
 
 description = "A bot with Qu'ran, hadith, hijri calendar and prayer time functions. Bot owner: @Zaify#6850"
-
-bot = commands.Bot(command_prefix='-', description=description)
+prefix = '-'
+bot = commands.Bot(command_prefix=prefix, description=description)
 servers = len(bot.servers)
 
 

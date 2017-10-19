@@ -14,7 +14,7 @@ class PrayerTimes:
     def __init__(self, bot):
         self.bot = bot
         self.session = ClientSession(loop = bot.loop)
-        self.url = 'http://api.aladhan.com/timingsByAddress?address={location}&method={method}&school={maddhab}'
+        self.url = 'http://api.aladhan.com/timingsByAddress?address={}&method={}&school={}'
 
     @commands.bot.command()
     async def prayertimes(self, location: str, method: str = None, maddhab: str = None):

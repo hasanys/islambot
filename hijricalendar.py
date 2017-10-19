@@ -7,8 +7,8 @@ class HijriCalendar:
     def __init__(self, bot):
         self.bot = bot
         self.session = ClientSession(loop = bot.loop)
-        self.toGregorian_url = 'https://api.aladhan.com/hToG?date={date}'
-        self.toHijri_url = 'https://api.aladhan.com/gToH?date={date}'
+        self.toGregorian_url = 'https://api.aladhan.com/hToG?date={}'
+        self.toHijri_url = 'https://api.aladhan.com/gToH?date={}'
 
     # Convert from Hijri to Gregorian calendar
     @commands.bot.command(pass_context=True)

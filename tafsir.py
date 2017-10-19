@@ -67,7 +67,7 @@ class Tafsir:
                 return
         tafsirSpec.tafsir = tafsir
 
-        self.getTafsirs(tafsirSpec)
+        await self.getTafsirs(tafsirSpec)
         readableTafsir = self.getReadableTafsirName(tafsir)
 
         em = makeEmbed(fields=tafsirSpec.orderedDict, author=readableTafsir, author_icon=icon, colour=0x467f05,
@@ -109,7 +109,7 @@ class Tafsir:
         surah, minAyah, maxAyah, tafsir, orDict = tafsirspec.unpack()
 
         for verse in range(minAyah, maxAyah):
-            self.getTafsir(orDict, tafsir, surah, verse)
+            await self.getTafsir(orDict, tafsir, surah, verse)
 
     async def getTafsir(self, orDict, tafsir, surah, verse):
         async with self.session.get(self.url.format(surah, verse, tafsir)) as r:

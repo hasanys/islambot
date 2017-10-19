@@ -1,7 +1,6 @@
-from collections import OrderedDict
 from aiohttp import ClientSession
 from discord.ext import commands
-from helpers import processRef
+from helpers import processRef, Specifics
 from main import prefix
 from utils import makeEmbed
 
@@ -12,13 +11,10 @@ class TafsirError(Exception):
     pass
 
 
-class TafsirSpecifics:
-    def __init__(self, surah, ayah, maxayah):
-        self.surah = surah
-        self.minAyah = ayah
-        self.maxAyah = maxayah
-        self.tafsir = ''
-        self.orderedDict = OrderedDict()
+class TafsirSpecifics(Specifics):
+    def __init__(self, surah, ayah, maxayah, tafsir):
+        super().__init__(surah, ayah, maxayah)
+        self.tafsir = tafsir
 
     def unpack(self):
         return self.surah, self.minAyah, self.maxAyah, self.tafsir, self.orderedDict
@@ -44,9 +40,17 @@ class Tafsir:
 
         print(f'{sender} executed command tafsir on {server} ({serverid})')
 
+        if tafsir is None:
+            tafsir = 'ar.jalalayn'
+            await self.bot.say('Defaulting to Tafsir al-Jalalayn.')
+        elif tafsir in tafsir_list:
+            tafsir = 'ar.' + tafsir
+        else:
+            await self.bot.say(f'Invalid tafsir. Valid tafsirs are: `{tafsir_list}`')
+            return
+
         try:
-            surah, min_ayah, max_ayah = processRef(ref)
-            tafsirSpec = TafsirSpecifics(surah, min_ayah, max_ayah)
+            tafsirSpec = self.getSpec(ref, tafsir = tafsir)
         except:
             await self.bot.say("Invalid arguments! Do `{0}tafsir [surah]:[ayah] (optional tafsir name)`. "
                                "Example: `{0}tafsir 1:1`"
@@ -58,33 +62,18 @@ class Tafsir:
                                "**Valid editions**: `{1}`".format(prefix, tafsir_list))
             return
 
-        if tafsir is None:
-            tafsir = 'ar.jalalayn'
-            await self.bot.say('Defaulting to Tafsir al-Jalalayn.')
-        else:
-            try:
-                tafsir = self.processTafsirName(tafsir)
-            except TafsirError:
-                await self.bot.say(f'Invalid tafsir. Valid tafsirs are: `{tafsir_list}`')
-                return
-        tafsirSpec.tafsir = tafsir
-
         await self.getTafsirs(tafsirSpec)
-        readableTafsir = self.getReadableTafsirName(tafsir)
+        readableTafsirName = self.getReadableTafsirName(tafsir)
 
-        em = makeEmbed(fields=tafsirSpec.orderedDict, author=readableTafsir, author_icon=icon, colour=0x467f05,
+        em = makeEmbed(fields=tafsirSpec.orderedDict, author=readableTafsirName, author_icon=icon, colour=0x467f05,
                        inline=False)
 
         await self.bot.say(embed=em)
 
     @staticmethod
-    def processTafsirName(tafsir):
-        if tafsir in tafsir_list:
-            tafsir = 'ar.' + tafsir
-        else:
-            raise TafsirError
-
-        return tafsir
+    def getSpec(ref, tafsir):
+        surah, min_ayah, max_ayah = processRef(ref)
+        return TafsirSpecifics(surah, min_ayah, max_ayah, tafsir)
 
     @staticmethod
     def getReadableTafsirName(tafsir):

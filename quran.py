@@ -1,8 +1,7 @@
-from collections import OrderedDict
 from aiohttp import ClientSession
 from discord.ext import commands
 from utils import makeEmbed
-from helpers import processRef
+from helpers import processRef, Specifics
 from main import prefix
 
 icon = 'https://lh6.ggpht.com/hwhtsACU29Zv7NNKpLqH4k0NgCrdc6xU-B5PMx06PxH29PMz_PuBEFcmtvp37qZHhqGI=w300'
@@ -10,17 +9,24 @@ edition_list = ['sahih', 'ahmedali', 'ahmedraza', 'arberry', 'asad', 'daryabadi'
                 'sarwar', 'yusufali']
 
 
+class QuranSpecifics(Specifics):
+    def __init__(self, surah, minayah, maxayah, edition):
+        super().__init__(surah, minayah, maxayah)
+        self.edition = edition
+
+
 class Quran:
 
     def __init__(self, bot):
         self.bot = bot
         self.session = ClientSession(loop=bot.loop)
+        self.url = 'http://api.alquran.cloud/ayah/{}:{}/{}'
 
-    @commands.bot.command(pass_context=True)
-    async def aquran(self, ctx, *, ref: str):
+    @commands.bot.command()
+    async def aquran(self, *, ref: str):
 
         try:
-            surah, min_ayah, max_ayah = processRef(ref)
+            quranSpec = self.getSpec(ref)
         except:
             await self.bot.say("Invalid arguments! Do `{0}aquran [surah]:[ayah]`. "
                                "Example: `{0}aquran 1:1`"
@@ -31,43 +37,26 @@ class Quran:
             return
 
         try:
+            surah_name = await self.getMetadata(quranSpec)
+            await self.getVerses(quranSpec)
 
-            # Text needs to be in an OrderedDict for some reason
-            o = OrderedDict()
-
-            # Set base URL
-            url = 'http://api.alquran.cloud/ayah/{}:{}/ar'
-
-            # Get data from API
-            async with self.session.get(url.format(surah, min_ayah)) as r:
-                data = await r.json()
-
-            # Get variables and text
-            surah_name =  data['data']['surah']['name']
-            o['{}:{}'.format(surah, min_ayah)] = data['data']['text']
-
-            # If multiple ayahs need to be quoted, get the text for them
-            for verse in range(min_ayah + 1, max_ayah):
-                async with self.session.get(url.format(surah, verse)) as r:
-                    data = await r.json()
-                o['{}:{}'.format(surah, verse)] = data['data']['text']
-
-            # Construct and send the embed
-            em = makeEmbed(fields=o, author=surah_name, author_icon=icon, colour=0x78c741,
+            em = makeEmbed(fields=quranSpec.orderedDict, author=surah_name, author_icon=icon, colour=0x78c741,
                            inline=False)
             await self.bot.say(embed=em)
 
         except:
             print(Exception)
 
-    # English Quran
+    @commands.bot.command()
+    async def quran(self, ref: str, edition: str = 'en.sahih'):
 
-    @commands.bot.command(pass_context=True)
-    async def quran(self, ctx, ref: str, edition: str = None):
+        if edition in edition_list:
+            edition = 'en.' + edition
+        elif edition != 'en.sahih':
+            await self.bot.say(f'Invalid translation. Valid translation editions are: `{edition_list}`')
 
-        # Get surah
         try:
-            surah, min_ayah, max_ayah = processRef(ref)
+            quranSpec = self.getSpec(ref, edition = edition)
         except:
             await self.bot.say("Invalid arguments! Do `{0}quran [surah]:[ayah] (edition)`. "
                                "Example: `{0}quran 1:1`"
@@ -79,50 +68,37 @@ class Quran:
                                "Example: `{0}quran 1:1-7`.".format(prefix))
             return
 
-        # Default to Sahih International if no edition is specified
-        if edition is None:
-            edition = 'en.sahih'
-
-        # Valid edition? Just add 'en.' before the edition name to convert it to the name needed for API
-        elif edition in edition_list:
-            edition = 'en.' + edition
-
-        # Otherwise, give the invalid edition error message.
-        else:
-            await self.bot.say(f'Invalid translation. Valid translation editions are: `{edition_list}`')
-
         try:
 
-            # Text needs to be in an OrderedDict for some reason
-            o = OrderedDict()
+            surah_name, readableEdition = await self.getMetadata(quranSpec)
+            await self.getVerses(quranSpec)
 
-            # Set base URL
-            url = 'http://api.alquran.cloud/ayah/{}:{}/{}'
-
-            # Get data from API
-            async with self.session.get(url.format(surah, min_ayah, edition)) as r:
-                data = await r.json()
-
-            # Get variables and text
-            surah_name = data['data']['surah']['englishName']
-            o['{}:{}'.format(surah, min_ayah)] = data['data']['text']
-
-            # If multiple ayahs need to be quoted, get the text for them
-            for verse in range(min_ayah + 1, max_ayah):
-                async with self.session.get(url.format(surah, verse, edition)) as r:
-                    data = await r.json()
-                o['{}:{}'.format(surah, verse)] = data['data']['text']
-
-            # Get the edition name in English
-            edition = data['data']['edition']['name']
-
-            # Construct and send the embed
-            em = makeEmbed(fields=o, author=f'Surah {surah_name} - {edition}', author_icon=icon, colour=0x78c741,
-                           inline=False)
+            em = makeEmbed(fields=quranSpec.orderedDict, author=f'Surah {surah_name} - {readableEdition}',
+                           author_icon=icon, colour=0x78c741, inline=False)
             await self.bot.say(embed=em)
 
         except:
             print(Exception)
+
+    @staticmethod
+    def getSpec(ref, edition = 'ar'):
+        surah, min_ayah, max_ayah = processRef(ref)
+        return QuranSpecifics(surah, min_ayah, max_ayah, edition)
+
+    async def getVerses(self, spec):
+        for verse in range(spec.minAyah, spec.maxAyah):
+            async with self.session.get(self.url.format(spec.surah, verse, spec.edition)) as r:
+                data = await r.json()
+
+            spec.orderedDict['{}:{}'.format(spec.surah, verse)] = data['data']['text']
+
+    async def getMetadata(self, spec):
+        async with self.session.get(self.url.format(spec.surah, spec.minAyah, spec.edition)) as r:
+            data = await r.json()
+        if spec.edition == 'ar':
+            return data['data']['surah']['name']
+        else:
+            return data['data']['surah']['englishName'], data['data']['edition']['name']
 
 
 # Register as cog

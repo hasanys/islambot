@@ -180,7 +180,6 @@ class Hadith:
         await spec.getHadith()
 
         if spec.hadith.hadithText is not None and spec.hadith.hadithText != "None":
-            print(spec.hadith.hadithText)
             em, messageText = spec.makeEmbed()
             await self.bot.say(messageText, embed=em)
         else:

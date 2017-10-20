@@ -1,6 +1,7 @@
 import re
-from bs4 import BeautifulSoup
 import discord
+from helpers import prefix
+from bs4 import BeautifulSoup
 from discord.ext import commands
 from aiohttp import ClientSession
 
@@ -25,14 +26,29 @@ class HadithGrading:
 
 
 class HadithSpecifics:
-    def __init__(self, book_name, session):
+    def __init__(self, book_name, session, isEng):
         self.session = session
-
-        self.raw_text = None
+        self.book_name = book_name
         self.url = 'https://sunnah.com/{}/{}'
 
-        self.book_name = book_name
+        self.raw_text = None
         self.readableBookName = None
+
+        if isEng:
+            self.hadithTextCSSClass = "text_details"
+            self.formatBookName = self.formatEnglishBookName
+
+            self.embedTitle = self.hadith.narrator
+            self.embedAuthorName = '{readableBookName} {book_number}:{hadith_number}'
+            self.embedAuthorName40 = '{readableBookName}, Hadith {hadith_number}'
+
+        else:
+            self.hadithTextCSSClass = "arabic_hadith_full arabic"
+            self.formatBookName = self.formatArabicBookName
+
+            self.embedTitle = self.hadith.chapter_name
+            self.embedAuthorName = '({book_number}:{hadith_number}) - {readableBookName}'
+            self.embedAuthorName40 = '{hadith_number} {readableBookName} , حديث'
 
         self.hadith = HadithGrading()
 
@@ -51,7 +67,7 @@ class HadithSpecifics:
             data = await resp.read()
         scanner = BeautifulSoup(data, "html.parser")
 
-        for hadith in scanner.findAll("div", {"class": "text_details"}):
+        for hadith in scanner.findAll("div", {"class": self.hadithTextCSSClass}):
             self.raw_text = hadith.text
 
         self.hadith.hadithText = self.formatHadithText(self.raw_text)
@@ -62,23 +78,10 @@ class HadithSpecifics:
         for hadith in scanner.findAll("td", {"class": "english_grade"}):
             self.hadith.grading = hadith.text
 
-        self.readableBookName = self.formatEnglishBookName(self.book_name)
-
-    async def getArabicHadith(self):
-        async with self.session.get(self.url) as resp:
-            data = await resp.read()
-        scanner = BeautifulSoup(data, "html.parser")
-
-        # Get raw hadith text
-        for hadith in scanner.findAll("div", {"class": "arabic_hadith_full arabic"}):
-            self.raw_text = hadith.text
-        self.hadith.hadithText = str(self.raw_text)
-
-        # Get chapter name
         for hadith in scanner.findAll("div", {"class": "arabicchapter arabic"}):
             self.hadith.chapter_name = hadith.text
 
-        self.readableBookName = self.formatArabicBookName(self.book_name)
+        self.readableBookName = self.formatBookName(self.book_name)
 
     def makeEmbed(self):
         messageText = None
@@ -87,33 +90,19 @@ class HadithSpecifics:
         else:
             description = self.hadith.hadithText[:1900] + '...' + f'\n \n*Full hadith:* {self.url}'
             messageText = 'This hadith was too long to send. Sending first 1900 characters:'
+
         if self.hadith.grading:
             description += f'\n \n**Grading**{self.hadith.grading}'
 
         if self.book_name not in ['qudsi40', 'nawawi40']:
-            authorName = f'{self.readableBookName} {self.hadith.book_number}:{self.hadith.hadith_number}'
+            authorName = self.embedAuthorName.format(readableBookName = self.readableBookName,
+                                                     book_number = self.hadith.book_number,
+                                                     hadith_number = self.hadith.hadith_number)
         else:
-            authorName = f'{self.readableBookName}, Hadith {self.hadith.hadith_number}'
+            authorName = self.embedAuthorName40.format(readableBookName = self.readableBookName,
+                                                       hadith_number = self.hadith.hadith_number)
 
-        em = discord.Embed(title = self.hadith.narrator, description = description, colour = 0x78c741)
-        em.set_author(name = authorName, icon_url = icon)
-
-        return em, messageText
-
-    def makeEmbedArabic(self):
-        messageText = None
-        if len(self.hadith.hadithText) < 1900:
-            description = self.hadith.hadithText
-        else:
-            description = self.hadith.hadithText[:1900] + '...' + f'\n \n*Full hadith:* {self.url}'
-            messageText = 'This hadith was too long to send. Sending first 1900 characters:'
-
-        if self.book_name not in ['qudsi40', 'nawawi40']:
-            authorName = f'({self.hadith.book_number}:{self.hadith.hadith_number}) - {self.readableBookName}'
-        else:
-            authorName = f'{self.hadith.hadith_number} {self.readableBookName} , حديث'
-
-        em = discord.Embed(title = self.hadith.chapter_name, description = description, colour = 0x78c741)
+        em = discord.Embed(title = self.embedTitle, description = description, colour = 0x78c741)
         em.set_author(name = authorName, icon_url = icon)
 
         return em, messageText
@@ -176,9 +165,10 @@ class Hadith:
     async def hadith(self, book_name: str = None, ref: str = None):
 
         if book_name in hadith_book_list:
-            spec = self.getSpec(book_name, ref, self.session)
+            spec = self.getSpec(book_name, ref, self.session, isEng = True)
         else:
-            await self.bot.say(f'Invalid arguments! Please do `.hadith (book name) (book number) (hadith number)` \n'
+            await self.bot.say(f'Invalid arguments! '
+                               f'Please do `{prefix}hadith (book name) (book number) (hadith number)` \n'
                                f'Valid book names are `{hadith_book_list}`')
             return
         await spec.getHadith()
@@ -193,23 +183,24 @@ class Hadith:
     async def ahadith(self, book_name: str, ref: str = None):
 
         if book_name in hadith_book_list:
-            spec = self.getSpec(book_name, ref, self.bot)
+            spec = self.getSpec(book_name, ref, self.session)
         else:
-            await self.bot.say(f'Invalid arguments! Please do `.hadith (book name) (book number) (hadith number)` \n'
+            await self.bot.say(f'Invalid arguments! '
+                               f'Please do `{prefix}hadith (book name) (book number) (hadith number)` \n'
                                f'Valid book names are `{hadith_book_list}`')
             return
 
-        await spec.getArabicHadith()
+        await spec.getHadith()
 
         if spec.hadith.hadithText is not None:
-            em, messagetxt = spec.makeEmbedArabic()
+            em, messagetxt = spec.makeEmbed()
             await self.bot.say(messagetxt, embed=em)
         else:
             await self.bot.say(error)
 
     @staticmethod
-    def getSpec(book_name, ref, session):
-        spec = HadithSpecifics(book_name, session)
+    def getSpec(book_name, ref, session, isEng = False):
+        spec = HadithSpecifics(book_name, session, isEng)
         spec.processRef(ref)
         return spec
 

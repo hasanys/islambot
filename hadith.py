@@ -61,7 +61,8 @@ class HadithSpecifics:
     def processRef(self, ref):
         if not self.isQudsiNawawi():
             self.hadith.book_number, self.hadith.hadith_number = ref.split(":")
-            self.url = self.url.format(self.book_name, self.hadith.hadith_number) + f'/{self.hadith.hadith_number}'
+            self.url = self.url.format(self.book_name, self.hadith.book_number) + f'/{self.hadith.hadith_number}'
+            print(self.url)
 
         else:
             self.hadith.hadith_number = ref
@@ -129,7 +130,7 @@ class HadithSpecifics:
             'nasai'          : "Sunan an-Nasa'i",
             'ibnmajah'       : 'Sunan Ibn Majah',
             'malik'          : 'Muwatta Malik',
-            'riyadussaliheen': 'Riyad as-Salihin',
+            'riyadussaliheen': 'Riyad as-Saliheen',
             'adab'           : "Al-Adab Al-Mufrad",
             'bulugh'         : 'Bulugh al-Maram',
             'qudsi40'        : '40 Hadith Qudsi',
@@ -178,7 +179,8 @@ class Hadith:
             return
         await spec.getHadith()
 
-        if spec.hadith.hadithText is not None:
+        if spec.hadith.hadithText is not None and spec.hadith.hadithText != "None":
+            print(spec.hadith.hadithText)
             em, messageText = spec.makeEmbed()
             await self.bot.say(messageText, embed=em)
         else:

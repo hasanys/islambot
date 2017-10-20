@@ -34,6 +34,8 @@ class HadithSpecifics:
         self.raw_text = None
         self.readableBookName = None
 
+        self.hadith = HadithGrading()
+
         if isEng:
             self.hadithTextCSSClass = "text_details"
             self.formatBookName = self.formatEnglishBookName
@@ -55,8 +57,6 @@ class HadithSpecifics:
                 self.embedAuthorName = '({book_number}:{hadith_number}) - {readableBookName}'
             else:
                 self.embedAuthorName = '{hadith_number} {readableBookName} , حديث'
-
-        self.hadith = HadithGrading()
 
     def processRef(self, ref):
         if not self.isQudsiNawawi():

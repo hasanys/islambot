@@ -12,34 +12,39 @@ error = ('The hadith could not be found on sunnah.com. This could be because it 
          'or due to the irregular structure of the website.')
 
 
+class HadithGrading:
+    def __init__(self):
+        self.narrator = None
+        self.grading = None
+
+        self.book_number = None
+        self.hadith_number = None
+
+        self.hadithText = None
+        self.chapter_name = None
+
+
 class HadithSpecifics:
     def __init__(self, book_name, session):
         self.session = session
 
-        self.narrator = None
-        self.grading = None
-
-        self.text = None
+        self.raw_text = None
         self.url = 'https://sunnah.com/{}/{}'
 
-        self.book_number = None
         self.book_name = book_name
         self.readableBookName = None
 
-        self.hadith_number = None
-        self.hadithText = None
-
-        self.chapter_name = None
+        self.hadith = HadithGrading()
 
     def processRef(self, ref):
         if self.book_name not in ['qudsi', 'nawawi']:
-            self.book_number, self.hadith_number = ref.split(":")
-            self.url = self.url.format(self.book_name, self.hadith_number) + f'/{self.hadith_number}'
+            self.hadith.book_number, self.hadith.hadith_number = ref.split(":")
+            self.url = self.url.format(self.book_name, self.hadith.hadith_number) + f'/{self.hadith.hadith_number}'
 
         else:
-            self.hadith_number = ref
+            self.hadith.hadith_number = ref
             self.book_name = self.book_name + '40'
-            self.url = self.url.format(self.book_name, self.hadith_number)
+            self.url = self.url.format(self.book_name, self.hadith.hadith_number)
 
     async def getHadith(self):
         async with self.session.get(self.url) as resp:
@@ -47,15 +52,15 @@ class HadithSpecifics:
         scanner = BeautifulSoup(data, "html.parser")
 
         for hadith in scanner.findAll("div", {"class": "text_details"}):
-            self.text = hadith.text
+            self.raw_text = hadith.text
 
-        self.hadithText = self.formatHadithText(self.text)
+        self.hadith.hadithText = self.formatHadithText(self.raw_text)
 
         for hadith in scanner.findAll("div", {"class": "hadith_narrated"}):
-            self.narrator = hadith.text
+            self.hadith.narrator = hadith.text
 
         for hadith in scanner.findAll("td", {"class": "english_grade"}):
-            self.grading = hadith.text
+            self.hadith.grading = hadith.text
 
         self.readableBookName = self.formatEnglishBookName(self.book_name)
 
@@ -66,49 +71,49 @@ class HadithSpecifics:
 
         # Get raw hadith text
         for hadith in scanner.findAll("div", {"class": "arabic_hadith_full arabic"}):
-            self.text = hadith.text
-        self.hadithText = str(self.text)
+            self.raw_text = hadith.text
+        self.hadith.hadithText = str(self.raw_text)
 
         # Get chapter name
         for hadith in scanner.findAll("div", {"class": "arabicchapter arabic"}):
-            self.chapter_name = hadith.text
+            self.hadith.chapter_name = hadith.text
 
         self.readableBookName = self.formatArabicBookName(self.book_name)
 
     def makeEmbed(self):
         messageText = None
-        if len(self.hadithText) < 1900:
-            description = self.hadithText
+        if len(self.hadith.hadithText) < 1900:
+            description = self.hadith.hadithText
         else:
-            description = self.hadithText[:1900] + '...' + f'\n \n*Full hadith:* {self.url}'
+            description = self.hadith.hadithText[:1900] + '...' + f'\n \n*Full hadith:* {self.url}'
             messageText = 'This hadith was too long to send. Sending first 1900 characters:'
-        if self.grading:
-            description += f'\n \n**Grading**{self.grading}'
+        if self.hadith.grading:
+            description += f'\n \n**Grading**{self.hadith.grading}'
 
         if self.book_name not in ['qudsi40', 'nawawi40']:
-            authorName = f'{self.readableBookName} {self.book_number}:{self.hadith_number}'
+            authorName = f'{self.readableBookName} {self.hadith.book_number}:{self.hadith.hadith_number}'
         else:
-            authorName = f'{self.readableBookName}, Hadith {self.hadith_number}'
+            authorName = f'{self.readableBookName}, Hadith {self.hadith.hadith_number}'
 
-        em = discord.Embed(title = self.narrator, description = description, colour = 0x78c741)
+        em = discord.Embed(title = self.hadith.narrator, description = description, colour = 0x78c741)
         em.set_author(name = authorName, icon_url = icon)
 
         return em, messageText
 
     def makeEmbedArabic(self):
         messageText = None
-        if len(self.hadithText) < 1900:
-            description = self.hadithText
+        if len(self.hadith.hadithText) < 1900:
+            description = self.hadith.hadithText
         else:
-            description = self.hadithText[:1900] + '...' + f'\n \n*Full hadith:* {self.url}'
+            description = self.hadith.hadithText[:1900] + '...' + f'\n \n*Full hadith:* {self.url}'
             messageText = 'This hadith was too long to send. Sending first 1900 characters:'
 
         if self.book_name not in ['qudsi40', 'nawawi40']:
-            authorName = f'({self.book_number}:{self.hadith_number}) - {self.readableBookName}'
+            authorName = f'({self.hadith.book_number}:{self.hadith.hadith_number}) - {self.readableBookName}'
         else:
-            authorName = f'{self.hadith_number} {self.readableBookName} , حديث'
+            authorName = f'{self.hadith.hadith_number} {self.readableBookName} , حديث'
 
-        em = discord.Embed(title = self.chapter_name, description = description, colour = 0x78c741)
+        em = discord.Embed(title = self.hadith.chapter_name, description = description, colour = 0x78c741)
         em.set_author(name = authorName, icon_url = icon)
 
         return em, messageText
@@ -178,7 +183,7 @@ class Hadith:
             return
         await spec.getHadith()
 
-        if spec.hadithText is not None:
+        if spec.hadith.hadithText is not None:
             em, messageText = spec.makeEmbed()
             await self.bot.say(messageText, embed=em)
         else:
@@ -196,7 +201,7 @@ class Hadith:
 
         await spec.getArabicHadith()
 
-        if spec.hadithText is not None:
+        if spec.hadith.hadithText is not None:
             em, messagetxt = spec.makeEmbedArabic()
             await self.bot.say(messagetxt, embed=em)
         else:

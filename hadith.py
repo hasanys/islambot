@@ -39,21 +39,27 @@ class HadithSpecifics:
             self.formatBookName = self.formatEnglishBookName
 
             self.embedTitle = self.hadith.narrator
-            self.embedAuthorName = '{readableBookName} {book_number}:{hadith_number}'
-            self.embedAuthorName40 = '{readableBookName}, Hadith {hadith_number}'
+
+            if not self.isQudsiNawawi():
+                self.embedAuthorName = '{readableBookName} {book_number}:{hadith_number}'
+            else:
+                self.embedAuthorName = '{readableBookName}, Hadith {hadith_number}'
 
         else:
             self.hadithTextCSSClass = "arabic_hadith_full arabic"
             self.formatBookName = self.formatArabicBookName
 
             self.embedTitle = self.hadith.chapter_name
-            self.embedAuthorName = '({book_number}:{hadith_number}) - {readableBookName}'
-            self.embedAuthorName40 = '{hadith_number} {readableBookName} , حديث'
+
+            if not self.isQudsiNawawi():
+                self.embedAuthorName = '({book_number}:{hadith_number}) - {readableBookName}'
+            else:
+                self.embedAuthorName = '{hadith_number} {readableBookName} , حديث'
 
         self.hadith = HadithGrading()
 
     def processRef(self, ref):
-        if self.book_name not in ['qudsi', 'nawawi']:
+        if not self.isQudsiNawawi():
             self.hadith.book_number, self.hadith.hadith_number = ref.split(":")
             self.url = self.url.format(self.book_name, self.hadith.hadith_number) + f'/{self.hadith.hadith_number}'
 
@@ -94,13 +100,9 @@ class HadithSpecifics:
         if self.hadith.grading:
             description += f'\n \n**Grading**{self.hadith.grading}'
 
-        if self.book_name not in ['qudsi40', 'nawawi40']:
-            authorName = self.embedAuthorName.format(readableBookName = self.readableBookName,
-                                                     book_number = self.hadith.book_number,
-                                                     hadith_number = self.hadith.hadith_number)
-        else:
-            authorName = self.embedAuthorName40.format(readableBookName = self.readableBookName,
-                                                       hadith_number = self.hadith.hadith_number)
+        authorName = self.embedAuthorName.format(readableBookName = self.readableBookName,
+                                                 book_number = self.hadith.book_number,
+                                                 hadith_number = self.hadith.hadith_number)
 
         em = discord.Embed(title = self.embedTitle, description = description, colour = 0x78c741)
         em.set_author(name = authorName, icon_url = icon)
@@ -154,6 +156,9 @@ class HadithSpecifics:
         }
 
         return bookDict[book_name]
+
+    def isQudsiNawawi(self):
+        return self.book_name in ['qudsi', 'nawawi', 'qudsi40', 'nawawi40']
 
 
 class Hadith:

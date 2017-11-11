@@ -179,7 +179,7 @@ For example, to convert 17 Muharram 1407:
 
 ## Search
 
-The bot can search for Islamic rulings on issues, derived from three websites: islamqa.org, islamqa.info and seekershub.org.
+The bot can search for Islamic rulings from from several websites, including islamqa.org, islamqa.info and seekershub.org.
 
 ### -islamqa
 Search for an Islamic ruling on a topic.
@@ -190,7 +190,7 @@ Search for an Islamic ruling on a topic.
 
 For example:
 ```
--islamqa "Permissibility of music"
+-islamqa "Combining prayers"
 ```
 
 

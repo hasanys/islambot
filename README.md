@@ -1,7 +1,7 @@
 # islambot
 A simple Islamic Discord bot with support for Qu'ran, hadith (from sunnah.com), salaah times and conversions to and from the hijri calendar.
 
-Created by Zaify#6850. Contributors: ala and Caleb
+Created by Zaify#6850. Message me if you have any suggestions or bug reports! Contributors: ala and Caleb
 
 ## Qu'ran 
 

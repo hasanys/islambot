@@ -50,15 +50,6 @@ For example, to quote the first verse of the Qu'ran:
 -aquran 1:1
 ```
 
-### -ayahimage
-**-ayahimage** can return an image of a single ayah in Arabic, from everyayah.com
-
-For example, to return the first verse of the Qu'ran:
-```
--ayahimage 1:1
-```
-
-
 ## Tafseer
 
 ### -atafsir

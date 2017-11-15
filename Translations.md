@@ -4,6 +4,11 @@ These can be used with the `-quran` command to display the Qu'ran in over 70 dif
 For example, `-quran 1:1-7 bengali` would display Surah al-Fatihah in Bengali.
 Some languages (such as English and Turkish) have multiple translations and have been split to reflect this.
 
+
+
+
+
+
 **Azerbaijani**: `mammadaliyev` (Məmmədəliyev & Bünyadov)
 **Azerbaijani**: `musayev` (Alikhan Musayev)
 

@@ -102,10 +102,8 @@ Some languages (such as English and Turkish) have multiple translations and have
 **Turkish**: `diyanet` (Diyanet İşleri)  
 **Turkish**: `vakfi` (Diyanet Vakfi)   
 **Turkish**: `golpinarli` (Abdulbakî Gölpınarlı)  
-**Turkish**: `ozturk` (Yasar Nuri Öztürk)  
 **Turkish**: `yazir` (Elmalılı Hamdi Yazır)  
 **Turkish**: `yildirim` (Suat Yıldırım)  
-**Turkish**: `yuksel` (Edip Yüksel)  
 
 **Tatar**: `tatar` (Yakub Ibn Nugman)
 

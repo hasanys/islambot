@@ -6,6 +6,8 @@ Some languages (such as English and Turkish) have multiple translations and have
   
   
   
+  
+  
 **Azerbaijani**: `mammadaliyev` (Məmmədəliyev & Bünyadov)  
 **Azerbaijani**: `musayev` (Alikhan Musayev)  
   
@@ -30,22 +32,22 @@ Some languages (such as English and Turkish) have multiple translations and have
   
 **English**: `sahih` (Saheeh International, *default*)  
 **English**: `ahmedali` (Ahmed Ali)  
-**English**: `arberry` (A. J. Arberry)
-**English**: `asad` (Muhammad Asad)
-**English**: `daryabadi` (Abdul Majid Daryabadi)
-**English**: `hilali` (Muhammad Taqi-ud-Din al-Hilali and Muhammad Muhsin Khan)
-**English**: `pickthall` (Mohammed Marmaduke William Pickthall)
-**English**: `qaribullah` (Hasan al-Fatih Qaribullah and Ahmad Darwish)
-**English**: `sarwar` (Muhammad Sarwar)
-**English**: `shakir` (Mohammad Habib Shakir)
-**English**: `yusufali` (Yusuf Ali)
-**English**: `transliteration`
+**English**: `arberry` (A. J. Arberry)  
+**English**: `asad` (Muhammad Asad)  
+**English**: `daryabadi` (Abdul Majid Daryabadi)  
+**English**: `hilali` (Muhammad Taqi-ud-Din al-Hilali and Muhammad Muhsin Khan)  
+**English**: `pickthall` (Mohammed Marmaduke William Pickthall)  
+**English**: `qaribullah` (Hasan al-Fatih Qaribullah and Ahmad Darwish)  
+**English**: `sarwar` (Muhammad Sarwar)  
+**English**: `shakir` (Mohammad Habib Shakir)  
+**English**: `yusufali` (Yusuf Ali)  
+**English**: `transliteration`  
   
   
-**Farsi**: `ayati` (AbdolMohammad Ayati)
-**Farsi**: `fooladvand` (Mohammad Mahdi Fooladvand)
-**Farsi**: `ghomshei` (Mahdi Elahi Ghomshei)
-**Farsi**: `makarem` (Naser Makarem Shirazi)
+**Farsi**: `ayati` (AbdolMohammad Ayati)  
+**Farsi**: `fooladvand` (Mohammad Mahdi Fooladvand)  
+**Farsi**: `ghomshei` (Mahdi Elahi Ghomshei)  
+**Farsi**: `makarem` (Naser Makarem Shirazi)  
   
   
 **French**: `french` (Muhammad Hamidullah)
@@ -79,9 +81,9 @@ Some languages (such as English and Turkish) have multiple translations and have
 
 **Romanian**: `romanian` (George Grigore)
 
-**Russian**: `kuliev` (Elmir Kuliev)
-**Russian**: `osmanov` (Magomed-Nuri Osmanovich Osmanov)
-**Russian**: `porokhova` (V. Porokhova)
+**Russian**: `kuliev` (Elmir Kuliev)  
+**Russian**: `osmanov` (Magomed-Nuri Osmanovich Osmanov)  
+**Russian**: `porokhova` (V. Porokhova)  
 
 **Sindhi**: `sindhi` (Taj Mehmood Amroti)
 
@@ -95,24 +97,24 @@ Some languages (such as English and Turkish) have multiple translations and have
 
 **Thai**: `thai` (King Fahad Quran Complex)
 
-**Turkish**: `ates` (Süleyman Ateş)
-**Turkish**: `bulac` (Alİ Bulaç)
-**Turkish**: `diyanet` (Diyanet İşleri)
-**Turkish**: `vakfi` (Diyanet Vakfi) 
-**Turkish**: `golpinarli` (Abdulbakî Gölpınarlı)
-**Turkish**: `ozturk` (Yasar Nuri Öztürk)
-**Turkish**: `yazir` (Elmalılı Hamdi Yazır)
-**Turkish**: `yildirim` (Suat Yıldırım)
-**Turkish**: `yuksel` (Edip Yüksel)
+**Turkish**: `ates` (Süleyman Ateş)  
+**Turkish**: `bulac` (Alİ Bulaç)  
+**Turkish**: `diyanet` (Diyanet İşleri)  
+**Turkish**: `vakfi` (Diyanet Vakfi)   
+**Turkish**: `golpinarli` (Abdulbakî Gölpınarlı)  
+**Turkish**: `ozturk` (Yasar Nuri Öztürk)  
+**Turkish**: `yazir` (Elmalılı Hamdi Yazır)  
+**Turkish**: `yildirim` (Suat Yıldırım)  
+**Turkish**: `yuksel` (Edip Yüksel)  
 
 **Tatar**: `tatar` (Yakub Ibn Nugman)
 
 **Uyghur**: `uyghur` (Muhammad Saleh)
 
-**Urdu**: `jalandhry` (Fateh Muhammad Jalandhry)
-**Urdu**: `jawadi` (Syed Zeeshan Haider Jawadi)
-**Urdu**: `qadri` (Tahir ul Qadri)
-**Urdu**: `maududi` (Abul Ala Maududi)
+**Urdu**: `jalandhry` (Fateh Muhammad Jalandhry)  
+**Urdu**: `jawadi` (Syed Zeeshan Haider Jawadi)  
+**Urdu**: `qadri` (Tahir ul Qadri)  
+**Urdu**: `maududi` (Abul Ala Maududi)  
 
 **Uzbek**: `uzbek` (Muhammad Sodik Muhammad Yusuf)
 

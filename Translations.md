@@ -3,33 +3,33 @@
 These can be used with the `-quran` command to display the Qu'ran in over 70 different languages/translations. 
 For example, `-quran 1:1-7 bengali` would display Surah al-Fatihah in Bengali.
 Some languages (such as English and Turkish) have multiple translations and have been split to reflect this.
-
-
-
-
-
-
-**Azerbaijani**: `mammadaliyev` (Məmmədəliyev & Bünyadov)
-**Azerbaijani**: `musayev` (Alikhan Musayev)
-
-**Albanian**: `ahmeti` (Sherif Ahmeti)
-**Albanian**: `medhiu` (Feti Mehdiu)
-**Albanian**: `nahi` (Hasan Efendi Nahi)
-
-**Bengali**: `bengali` (Muhiuddin Khan)
-
-**Czech**: `hrbek` (Preklad I. Hrbek)
-**Czech**: `nykl` (A. R. Nykl)
-
-**German**: `aburida` (Abu Rida)
-**German**: `bubenheim` (Bubenheim & Elyas)
-**German**: `khoury` (Adel Theodor Khoury)
-**German**: `zaidan` (Amir Zaidan)
-
-**Divehi/Maldivian**: `divehi` (Office of the President of Maldives)
-
-**English**: `sahih` (Saheeh International, *default*)
-**English**: `ahmedali` (Ahmed Ali)
+  
+  
+  
+**Azerbaijani**: `mammadaliyev` (Məmmədəliyev & Bünyadov)  
+**Azerbaijani**: `musayev` (Alikhan Musayev)  
+  
+**Albanian**: `ahmeti` (Sherif Ahmeti)  
+**Albanian**: `medhiu` (Feti Mehdiu)  
+**Albanian**: `nahi` (Hasan Efendi Nahi)  
+  
+**Bengali**: `bengali` (Muhiuddin Khan)  
+  
+  
+**Czech**: `hrbek` (Preklad I. Hrbek)  
+**Czech**: `nykl` (A. R. Nykl)  
+  
+**German**: `aburida` (Abu Rida)  
+**German**: `bubenheim` (Bubenheim & Elyas)  
+**German**: `khoury` (Adel Theodor Khoury)  
+**German**: `zaidan` (Amir Zaidan)  
+  
+  
+**Divehi/Maldivian**: `divehi` (Office of the President of Maldives)  
+  
+  
+**English**: `sahih` (Saheeh International, *default*)  
+**English**: `ahmedali` (Ahmed Ali)  
 **English**: `arberry` (A. J. Arberry)
 **English**: `asad` (Muhammad Asad)
 **English**: `daryabadi` (Abdul Majid Daryabadi)
@@ -40,18 +40,23 @@ Some languages (such as English and Turkish) have multiple translations and have
 **English**: `shakir` (Mohammad Habib Shakir)
 **English**: `yusufali` (Yusuf Ali)
 **English**: `transliteration`
-
+  
+  
 **Farsi**: `ayati` (AbdolMohammad Ayati)
 **Farsi**: `fooladvand` (Mohammad Mahdi Fooladvand)
 **Farsi**: `ghomshei` (Mahdi Elahi Ghomshei)
 **Farsi**: `makarem` (Naser Makarem Shirazi)
-
+  
+  
 **French**: `french` (Muhammad Hamidullah)
-
+  
+  
 **Hausa**: `hausa` (Abubakar Mahmoud Gumi)
-
+  
+  
 **Hindi**: `hindi` (Suhel Farooq Khan and Saifur Rahman Nadwi)
-
+  
+ 
 **Indonesian**: `indonesian`
 
 **Italian**: `italian` (Hamza Roberto Piccardo)

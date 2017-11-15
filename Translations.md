@@ -97,12 +97,9 @@ Some languages (such as English and Turkish) have multiple translations and have
 
 **Thai**: `thai` (King Fahad Quran Complex)
 
-**Turkish**: `ates` (Süleyman Ateş)  
 **Turkish**: `diyanet` (Diyanet İşleri)  
 **Turkish**: `vakfi` (Diyanet Vakfi)   
-**Turkish**: `golpinarli` (Abdulbakî Gölpınarlı)  
 **Turkish**: `yazir` (Elmalılı Hamdi Yazır)  
-**Turkish**: `yildirim` (Suat Yıldırım)  
 
 **Tatar**: `tatar` (Yakub Ibn Nugman)
 

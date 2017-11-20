@@ -20,27 +20,8 @@ For example:
 The above command would quote Surah 1, Verses 1-7 (Surah al-Fatihah) using the translation of Yusuf Ali.
 
 #### Valid translation editions
-* sahih = Saheeh International
 
-* ahmedali = Ahmed Ali
-
-* ahmedraza = Ahmed Raza Khan Barelvi
-
-* arberry = Arthur John Arberry (Non-Muslim) 
-
-* asad = Muhammad Asad
-
-* daryabadi = Abdul Majid Daryabadi
-
-* hilali = Hilali-Khan
-
-* pickthall = Muhammad Pickthall
-
-* qaribullah = Qaribullah & Darwish
-
-* sarwar = Muhammad Sarwar (Shia) 
-
-* yusufali = Yusuf Ali 
+[Click here for a list of valid editions and translations.](https://github.com/galacticwarrior9/islambot/blob/master/Translations.md)
 
 ### -aquran
 **-aquran** functions in the same way as **-quran**, but quotes the verse in Arabic.

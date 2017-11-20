@@ -6,7 +6,7 @@ Created by Zaify#6850. Message me if you have any suggestions or bug reports! Co
 ## Qu'ran 
 
 ### -quran
-**-quran** allows you to quote Qu'ran verses in English, with an optional English translation edition.
+**-quran** allows you to quote Qu'ran verses in English, with an optional translation edition.
 
 ```
 -quran <surah>:<verse(s)> [translation edition]
